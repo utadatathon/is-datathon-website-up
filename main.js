@@ -74,7 +74,7 @@ const StatusNameMap = {
 
 const check = async () => {
 	try {
-		const response = await fetch('https://datathon.library.uta.edu', {
+		const response = await fetch('https://utadatathon.tech', {
 			headers: {
 				'User-Agent': 'JaneIRL/is-datathon-website-up'
 			}
@@ -84,7 +84,7 @@ const check = async () => {
 	} catch (e) {
 		console.error(e)
 	} finally {
-		setTimeout(check, 60_000)
+		setTimeout(check, 3_600_000)
 	}
 }
 
@@ -101,7 +101,7 @@ const updateStatus = async (newStatus) => {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				content: `${isGood ? ':green_circle:' : ':red_square:'} <https://datathon.library.uta.edu> responded with ${newStatus} ${StatusNameMap[newStatus]}`,
+				content: `${isGood ? ':green_circle:' : ':red_square:'} <https://utadatathon.tech> responded with ${newStatus} ${StatusNameMap[newStatus]}`,
 			}),
 		})
 	}
