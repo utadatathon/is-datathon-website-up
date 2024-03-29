@@ -73,38 +73,36 @@ const StatusNameMap = {
 };
 
 const check = async () => {
-	try {
-		const response = await fetch('https://utadatathon.tech', {
-			headers: {
-				'User-Agent': 'JaneIRL/is-datathon-website-up'
-			}
-		})
-		updateStatus(response.status)
-		oldStatus = response.status
-	} catch (e) {
-		console.error(e)
-	} finally {
-		setTimeout(check, 3_600_000)
-	}
+    try {
+        const response = await fetch('https://utadatathon.tech', {
+            headers: {
+                'User-Agent': 'JaneIRL/is-datathon-website-up'
+            }
+        })
+        updateStatus(response.status)
+        oldStatus = response.status
+    } catch (e) {
+        console.error(e)
+    }
 }
 
 /**
  * @param {number} newStatus 
  */
 const updateStatus = async (newStatus) => {
-	if (oldStatus !== newStatus) {
-		const isGood = newStatus === 200
-		console.log(`[${isGood}] Status code changed: ${newStatus}`)
-		await fetch(WEBHOOK_URL, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				content: `${isGood ? ':green_circle:' : ':red_square:'} <https://utadatathon.tech> responded with ${newStatus} ${StatusNameMap[newStatus]}`,
-			}),
-		})
-	}
+    if (oldStatus !== newStatus) {
+        const isGood = newStatus === 200
+        console.log(`[${isGood}] Status code changed: ${newStatus}`)
+        await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                content: `${isGood ? ':green_circle:' : ':red_square:'} <https://utadatathon.tech> responded with ${newStatus} ${StatusNameMap[newStatus]}`,
+            }),
+        })
+    }
 }
 
 check();
